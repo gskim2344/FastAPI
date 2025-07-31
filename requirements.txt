@@ -116,7 +116,7 @@ types-s3transfer==0.13.0
 typing-inspection==0.4.1
 typing_extensions==4.12.2
 tzlocal==5.3.1
-urllib3==2.5.0
+urllib3==1.26.16
 uvicorn==0.35.0
 virtualenv==20.26.0
 watchdog==4.0.2
