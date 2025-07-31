@@ -25,7 +25,7 @@ def test(request: Request):
     return RedirectResponse(url="/todos/todo-page", status_code=status.HTTP_302_FOUND)
 
 
-@app.get("/healthy")
+@app.api_route("/healthy", methods=["GET", "POST"])
 def health_check():
     logging.info("healthy")
     return {"status": "healthy"}
