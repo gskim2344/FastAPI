@@ -53,6 +53,7 @@ def redirect_to_login():
 @router.get("/todo-page")
 async def render_todo_pages(request: Request, db: db_dependency):
     try:
+        logging.info("/todo-page")
         data = await request.json()
 
         logging.info(data)
