@@ -18,7 +18,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-logging.info("FastAPI todos 서버 시작됨")
+
 
 templates = Jinja2Templates(directory="TodoApp/templates")
 
@@ -53,6 +53,7 @@ def redirect_to_login():
 @router.get("/todo-page")
 async def render_todo_pages(request: Request, db: db_dependency):
     try:
+        logging.info("todo-page")
         logging.info("/todo-page")
         data = await request.json()
 

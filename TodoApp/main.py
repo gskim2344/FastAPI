@@ -27,7 +27,7 @@ def test(request: Request):
 
 @app.get("/healthy")
 def health_check():
-    logging.info("FastAPI healthy 서버 시작됨")
+    logging.info("healthy")
     return {"status": "healthy"}
 
 app.include_router(auth.router)
