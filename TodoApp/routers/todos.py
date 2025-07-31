@@ -18,7 +18,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-logging.info("FastAPI 서버 시작됨")
+logging.info("FastAPI todos 서버 시작됨")
 
 templates = Jinja2Templates(directory="TodoApp/templates")
 

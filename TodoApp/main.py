@@ -5,6 +5,13 @@ from .routers import auth, todos, admin,users
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
+import logging
+
+logging.basicConfig(
+    filename='/home/ec2-user/app/logs/app.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 app = FastAPI()
 
@@ -18,9 +25,9 @@ def test(request: Request):
     return RedirectResponse(url="/todos/todo-page", status_code=status.HTTP_302_FOUND)
 
 
-
 @app.get("/healthy")
 def health_check():
+    logging.info("FastAPI todos 서버 시작됨")
     return {"status": "healthy"}
 
 app.include_router(auth.router)
