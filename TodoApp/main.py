@@ -26,9 +26,11 @@ def test(request: Request):
 
 
 @app.api_route("/healthy", methods=["GET", "POST"])
-def health_check():
+async def health_check(request: Request):
     logging.info("healthy")
-    return {"status": "healthy"}
+    data = await request.json()
+    print("📦 받은 데이터:", data)
+    return {"status": "healthy received", "data": data}
 
 app.include_router(auth.router)
 app.include_router(todos.router)
