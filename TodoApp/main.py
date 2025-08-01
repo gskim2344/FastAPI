@@ -44,17 +44,17 @@ async def health_check(request: Request):
 
     calendar=GoogleCalendar()
     calendar.add_calendar()
-    calendar.get_available_slots("2025-08-01")
+    slots= calendar.get_available_slots("2025-08-01")
     user_id = data.get("userId")
-    send_to_lambda(user_id)
+    send_to_lambda(user_id,slots)
     return {"status": "healthy received", "data": data}
 
-def send_to_lambda(userId):
+def send_to_lambda(userId,message):
     payload = {
         "type": "reservation",
         "userId":userId,
         "user": "테스트",
-        "message": "예약 요청"
+        "message": message
     }
 
     headers = {"Content-Type": "application/json"}
