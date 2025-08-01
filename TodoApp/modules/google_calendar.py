@@ -6,12 +6,6 @@ from googleapiclient.discovery import build
 
 
 class GoogleCalendar:
-    SCOPES = []
-    BASE_DIR = ''
-    # 서비스 계정 키 경로
-    SERVICE_ACCOUNT_FILE = ''
-    CALENDAR_ID = ''
-
     def __init__(self):
         SCOPES = ['https://www.googleapis.com/auth/calendar']
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -44,7 +38,7 @@ class GoogleCalendar:
 
         # calendar_id = "googlecalendar4store@neural-caldron-467700-j1.iam.gserviceaccount.com"
         # 일정 등록 (⚠️ 공유된 캘린더 ID 필요 시 calendarId 수정)
-        event = service.events().insert(calendarId=CALENDAR_ID, body=event).execute()
+        event = self.service.events().insert(calendarId=self.CALENDAR_ID, body=event).execute()
         print('✅ 일정이 추가되었습니다:', event.get('htmlLink'))
 
         calendar_list = service.calendarList().list().execute()
