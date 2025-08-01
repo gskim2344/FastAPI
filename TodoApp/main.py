@@ -6,6 +6,11 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 import logging
+from pyngrok import ngrok
+
+# 8000 포트에 대한 공개 터널 생성
+public_url = ngrok.connect(8000)
+print("Public URL:", public_url)
 
 logging.basicConfig(
     filename='/home/ec2-user/app/logs/app.log',
