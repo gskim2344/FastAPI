@@ -37,3 +37,7 @@ def google_calendar():
     # 일정 등록 (⚠️ 공유된 캘린더 ID 필요 시 calendarId 수정)
     event = service.events().insert(calendarId=calendar_id, body=event).execute()
     print('✅ 일정이 추가되었습니다:', event.get('htmlLink'))
+
+    calendar_list = service.calendarList().list().execute()
+    for calendar_entry in calendar_list['items']:
+        print(calendar_entry['id'], calendar_entry.get('summary'))
