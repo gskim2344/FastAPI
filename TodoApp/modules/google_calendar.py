@@ -96,5 +96,6 @@ class GoogleCalendar:
                 slots.append(time_str)
             current += timedelta(minutes=interval_minutes)
 
-        print("예약할 수 있는 시간은 다음과 같습니다:"+slots)
+        print("예약할 수 있는 시간은 다음과 같습니다:")
+        print(slots)
         return slots
