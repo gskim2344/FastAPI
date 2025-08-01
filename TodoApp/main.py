@@ -8,8 +8,12 @@ from fastapi.responses import RedirectResponse
 import logging
 from pyngrok import ngrok
 from TodoApp.modules.google_calendar import GoogleCalendar
+import requests
 
 ngrok.set_auth_token("30fEKgtiPBhoLf3IL1fjcCdu7Eb_7QmnUgK5XHNDbidEkizW8")
+
+LAMBDA_ENDPOINT = "https://mov33u6lfk.execute-api.ap-northeast-1.amazonaws.com/Prod/api_endpoint"
+
 # 8000 포트에 대한 공개 터널 생성
 public_url = ngrok.connect(8000)
 print("Public URL:", public_url)
@@ -42,6 +46,19 @@ async def health_check(request: Request):
     calendar.add_calendar()
     calendar.get_available_slots("2025-08-01")
     return {"status": "healthy received", "data": data}
+
+def send_to_lambda():
+    payload = {
+        "type": "line_event",
+        "user": "테스트",
+        "message": "예약 요청"
+    }
+
+    headers = {"Content-Type": "application/json"}
+    response = requests.post(LAMBDA_ENDPOINT, json=payload, headers=headers)
+
+    print(response.status_code)
+    print(response.text)
 
 app.include_router(auth.router)
 app.include_router(todos.router)
