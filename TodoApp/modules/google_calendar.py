@@ -7,15 +7,15 @@ from googleapiclient.discovery import build
 
 class GoogleCalendar:
     def __init__(self):
-        SCOPES = ['https://www.googleapis.com/auth/calendar']
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        self.SCOPES = ['https://www.googleapis.com/auth/calendar']
+        self.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
         # 서비스 계정 키 경로
-        SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, '..', 'credentials', 'service_account.json')
-        CALENDAR_ID = "68182829d703e8372b86f5f3aca3f8db0ad256866fbe939d804ee1449f5a6824@group.calendar.google.com"
+        self.SERVICE_ACCOUNT_FILE = os.path.join(self.BASE_DIR, '..', 'credentials', 'service_account.json')
+        self.CALENDAR_ID = "68182829d703e8372b86f5f3aca3f8db0ad256866fbe939d804ee1449f5a6824@group.calendar.google.com"
         # 서비스 계정 인증 객체 생성
         creds = service_account.Credentials.from_service_account_file(
-            SERVICE_ACCOUNT_FILE, scopes=SCOPES
+            self.SERVICE_ACCOUNT_FILE, scopes=self.SCOPES
         )
         # Google Calendar API 객체 생성
         self.service = build('calendar', 'v3', credentials=creds)
@@ -41,6 +41,6 @@ class GoogleCalendar:
         event = self.service.events().insert(calendarId=self.CALENDAR_ID, body=event).execute()
         print('✅ 일정이 추가되었습니다:', event.get('htmlLink'))
 
-        calendar_list = service.calendarList().list().execute()
+        calendar_list = self.service.calendarList().list().execute()
         for calendar_entry in calendar_list['items']:
             print('✅ TEST:',calendar_entry['id'], calendar_entry.get('summary'))
