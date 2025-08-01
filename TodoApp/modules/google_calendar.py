@@ -19,6 +19,8 @@ def google_calendar():
         with open('token.pickle', 'rb') as token:
             creds = pickle.load(token)
 
+    print(creds)
+
     # 인증되지 않았거나 만료된 경우 새로 로그인
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -31,6 +33,7 @@ def google_calendar():
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
+    print("credentials loaded")
     # Google Calendar API 객체 생성
     service = build('calendar', 'v3', credentials=creds)
 
@@ -48,6 +51,7 @@ def google_calendar():
             'timeZone': 'Asia/Tokyo',
         },
     }
+    print(event)
 
     # 일정 삽입
     event = service.events().insert(calendarId='primary', body=event).execute()
