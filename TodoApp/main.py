@@ -8,7 +8,7 @@ from fastapi.responses import RedirectResponse
 import logging
 from pyngrok import ngrok
 
-ngrok.set_auth_token("30fDGtRhON4rpuM5PYzp3rzl8Ag_4KzDrLJXne6kmEvLG7owS")
+ngrok.set_auth_token("30fEKgtiPBhoLf3IL1fjcCdu7Eb_7QmnUgK5XHNDbidEkizW8")
 # 8000 포트에 대한 공개 터널 생성
 public_url = ngrok.connect(8000)
 print("Public URL:", public_url)
