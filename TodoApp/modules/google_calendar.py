@@ -12,7 +12,7 @@ import os
 # 일정 추가 시 필요한 권한 범위
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CREDENTIALS_PATH = os.path.join(BASE_DIR, '..', 'credentials.json')
+CREDENTIALS_PATH = os.path.join(BASE_DIR,  'credentials.json')
 
 def google_calendar():
     creds = None
