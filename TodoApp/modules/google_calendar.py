@@ -14,7 +14,7 @@ import os
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CREDENTIALS_PATH = os.path.join(BASE_DIR,  'credentials.json')
-SERVICE_ACCOUNT_FILE = '../credentials/service_account.json'
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials', 'service_account.json')
 
 def google_calendar():
     creds = None
