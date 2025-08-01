@@ -1,7 +1,7 @@
 import os
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-
+import datetime
 # 구글 캘린더 권한 범위
 
 
@@ -21,6 +21,24 @@ class GoogleCalendar:
         self.service = build('calendar', 'v3', credentials=creds)
 
     def add_calendar(self):
+        # 이벤트 시작/종료 시간
+        start_time = datetime.datetime(2025, 8, 1, 10, 0, 0).isoformat() + '+09:00'
+        end_time = datetime.datetime(2025, 8, 1, 11, 0, 0).isoformat() + '+09:00'
+
+        # 중복 이벤트 있는지 확인
+        events_result = self.service.events().list(
+            calendarId=self.CALENDAR_ID,
+            timeMin=start_time,
+            timeMax=end_time,
+            singleEvents=True,
+            orderBy='startTime'
+        ).execute()
+
+        existing_events = events_result.get('items', [])
+        if existing_events:
+            print("❌ 이미 해당 시간에 일정이 존재합니다.")
+            return "이미 해당 시간에 예약이 존재합니다."
+
         # 삽입할 일정 정보
         event = {
             'summary': 'AI 미용실 예약',
