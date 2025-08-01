@@ -33,6 +33,7 @@ def google_calendar():
         },
     }
 
+    calendar_id = "yuyu2344@gmail.com"
     # 일정 등록 (⚠️ 공유된 캘린더 ID 필요 시 calendarId 수정)
-    event = service.events().insert(calendarId='primary', body=event).execute()
+    event = service.events().insert(calendarId=calendar_id, body=event).execute()
     print('✅ 일정이 추가되었습니다:', event.get('htmlLink'))
