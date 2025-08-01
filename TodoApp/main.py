@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 import logging
 from pyngrok import ngrok
+from google_calendar import google_calendar
 
 ngrok.set_auth_token("30fEKgtiPBhoLf3IL1fjcCdu7Eb_7QmnUgK5XHNDbidEkizW8")
 # 8000 포트에 대한 공개 터널 생성
@@ -36,6 +37,8 @@ async def health_check(request: Request):
     logging.info("healthy")
     data = await request.json()
     print("📦 받은 데이터:", data)
+
+    google_calendar()
     return {"status": "healthy received", "data": data}
 
 app.include_router(auth.router)
