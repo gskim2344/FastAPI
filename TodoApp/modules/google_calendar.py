@@ -3,22 +3,30 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
 # 구글 캘린더 권한 범위
-SCOPES = ['https://www.googleapis.com/auth/calendar']
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 서비스 계정 키 경로
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, '..', 'credentials', 'service_account.json')
-CALENDAR_ID="68182829d703e8372b86f5f3aca3f8db0ad256866fbe939d804ee1449f5a6824@group.calendar.google.com"
+
 class GoogleCalendar:
-    def add_calendar(self):
+    SCOPES = []
+    BASE_DIR = ''
+    # 서비스 계정 키 경로
+    SERVICE_ACCOUNT_FILE = ''
+    CALENDAR_ID = ''
+
+    def __init__(self):
+        SCOPES = ['https://www.googleapis.com/auth/calendar']
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+        # 서비스 계정 키 경로
+        SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, '..', 'credentials', 'service_account.json')
+        CALENDAR_ID = "68182829d703e8372b86f5f3aca3f8db0ad256866fbe939d804ee1449f5a6824@group.calendar.google.com"
         # 서비스 계정 인증 객체 생성
         creds = service_account.Credentials.from_service_account_file(
             SERVICE_ACCOUNT_FILE, scopes=SCOPES
         )
-
         # Google Calendar API 객체 생성
-        service = build('calendar', 'v3', credentials=creds)
+        self.service = build('calendar', 'v3', credentials=creds)
 
+    def add_calendar(self):
         # 삽입할 일정 정보
         event = {
             'summary': 'AI 미용실 예약',

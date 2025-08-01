@@ -38,7 +38,8 @@ async def health_check(request: Request):
     data = await request.json()
     print("📦 받은 데이터:", data)
 
-    GoogleCalendar.add_calendar()
+    GoogleCalendar calendar=GoogleCalendar()
+    calendar.add_calendar()
     return {"status": "healthy received", "data": data}
 
 app.include_router(auth.router)
