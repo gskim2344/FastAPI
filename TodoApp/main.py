@@ -40,6 +40,7 @@ async def health_check(request: Request):
 
     calendar=GoogleCalendar()
     calendar.add_calendar()
+    calendar.get_available_slots("2025-08-01")
     return {"status": "healthy received", "data": data}
 
 app.include_router(auth.router)

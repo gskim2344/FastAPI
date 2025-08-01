@@ -1,7 +1,7 @@
 import os
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-import datetime
+from datetime import datetime, timedelta
 # 구글 캘린더 권한 범위
 
 
@@ -62,3 +62,39 @@ class GoogleCalendar:
         calendar_list = self.service.calendarList().list().execute()
         for calendar_entry in calendar_list['items']:
             print('✅ TEST:',calendar_entry['id'], calendar_entry.get('summary'))
+
+
+    def get_available_slots(self,date_str, start_hour=10, end_hour=18, interval_minutes=30):
+        date = datetime.strptime(date_str, "%Y-%m-%d")
+        start_time = date.replace(hour=start_hour, minute=0).isoformat() + 'Z'
+        end_time = date.replace(hour=end_hour, minute=0).isoformat() + 'Z'
+
+        # 3. 해당 날짜의 예약된 이벤트 가져오기
+        events_result = self.service.events().list(
+            calendarId=self.CALENDAR_ID,
+            timeMin=start_time,
+            timeMax=end_time,
+            singleEvents=True,
+            orderBy='startTime'
+        ).execute()
+        events = events_result.get('items', [])
+
+        # 4. 예약된 시간 리스트 추출
+        reserved = []
+        for event in events:
+            start = event['start'].get('dateTime', event['start'].get('date'))
+            dt = datetime.fromisoformat(start.replace("Z", "+00:00"))
+            reserved.append(dt.strftime("%H:%M"))
+
+        # 5. 전체 가능한 시간 슬롯 생성
+        slots = []
+        current = date.replace(hour=start_hour, minute=0)
+        end = date.replace(hour=end_hour, minute=0)
+        while current < end:
+            time_str = current.strftime("%H:%M")
+            if time_str not in reserved:
+                slots.append(time_str)
+            current += timedelta(minutes=interval_minutes)
+
+        print("예약할 수 있는 시간은 다음과 같습니다:"+slots)
+        return slots
