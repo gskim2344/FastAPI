@@ -31,10 +31,10 @@ def google_calendar():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
-            creds = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=["https://www.googleapis.com/auth/calendar"]
-)
+            creds = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
+    #         creds = service_account.Credentials.from_service_account_file(
+    # SERVICE_ACCOUNT_FILE, scopes=["https://www.googleapis.com/auth/calendar"]
+    # )
         # 토큰 저장
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
