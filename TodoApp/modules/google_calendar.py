@@ -32,7 +32,7 @@ def google_calendar():
         else:
             flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
             creds = service_account.Credentials.from_service_account_file(
-    "service-account.json", scopes=["https://www.googleapis.com/auth/calendar"]
+    CREDENTIALS_PATH, scopes=["https://www.googleapis.com/auth/calendar"]
 )
         # 토큰 저장
         with open('token.pickle', 'wb') as token:
