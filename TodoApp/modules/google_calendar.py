@@ -14,6 +14,7 @@ import os
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CREDENTIALS_PATH = os.path.join(BASE_DIR,  'credentials.json')
+SERVICE_ACCOUNT_FILE = '../credentials/service_account.json'
 
 def google_calendar():
     creds = None
@@ -32,7 +33,7 @@ def google_calendar():
         else:
             flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
             creds = service_account.Credentials.from_service_account_file(
-    CREDENTIALS_PATH, scopes=["https://www.googleapis.com/auth/calendar"]
+    SERVICE_ACCOUNT_FILE, scopes=["https://www.googleapis.com/auth/calendar"]
 )
         # 토큰 저장
         with open('token.pickle', 'wb') as token:
