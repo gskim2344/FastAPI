@@ -22,8 +22,8 @@ class GoogleCalendar:
 
     def add_calendar(self):
         # 이벤트 시작/종료 시간
-        start_time = datetime.datetime(2025, 8, 1, 10, 0, 0).isoformat() + '+09:00'
-        end_time = datetime.datetime(2025, 8, 1, 11, 0, 0).isoformat() + '+09:00'
+        start_time = datetime(2025, 8, 1, 10, 0, 0).isoformat() + '+09:00'
+        end_time = datetime(2025, 8, 1, 11, 0, 0).isoformat() + '+09:00'
 
         # 중복 이벤트 있는지 확인
         events_result = self.service.events().list(
