@@ -50,7 +50,7 @@ async def health_check(request: Request):
 
 def send_to_lambda():
     payload = {
-        "type": "line_event",
+        "type": "reservation",
         "user": "테스트",
         "message": "예약 요청"
     }
