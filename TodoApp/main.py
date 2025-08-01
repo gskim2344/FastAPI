@@ -45,7 +45,7 @@ async def health_check(request: Request):
     calendar=GoogleCalendar()
     calendar.add_calendar()
     calendar.get_available_slots("2025-08-01")
-    # send_to_lambda()
+    send_to_lambda()
     return {"status": "healthy received", "data": data}
 
 def send_to_lambda():
