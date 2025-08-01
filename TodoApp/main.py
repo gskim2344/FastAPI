@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 import logging
 from pyngrok import ngrok
-from google_calendar import google_calendar
+from TodoApp.modules.google_calendar import google_calendar
 
 ngrok.set_auth_token("30fEKgtiPBhoLf3IL1fjcCdu7Eb_7QmnUgK5XHNDbidEkizW8")
 # 8000 포트에 대한 공개 터널 생성
