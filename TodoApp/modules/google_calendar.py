@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # 서비스 계정 키 경로
 SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, '..', 'credentials', 'service_account.json')
-CALENDAR_ID="yuyu2344@gmail.com"
+CALENDAR_ID="68182829d703e8372b86f5f3aca3f8db0ad256866fbe939d804ee1449f5a6824@group.calendar.google.com"
 
 def google_calendar():
     # 서비스 계정 인증 객체 생성
