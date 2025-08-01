@@ -1,49 +1,24 @@
-from __future__ import print_function
-import datetime
-import os.path
-import pickle
-
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from google.oauth2 import service_account
 import os
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 
-# 일정 추가 시 필요한 권한 범위
+# 구글 캘린더 권한 범위
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CREDENTIALS_PATH = os.path.join(BASE_DIR,  'credentials.json')
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, '..','credentials', 'service_account.json')
+
+# 서비스 계정 키 경로
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, '..', 'credentials', 'service_account.json')
 
 def google_calendar():
-    creds = None
+    # 서비스 계정 인증 객체 생성
+    creds = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES
+    )
 
-    # 이전 인증 정보 불러오기
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
-
-    print(creds)
-
-    # 인증되지 않았거나 만료된 경우 새로 로그인
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            creds = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
-    #         creds = service_account.Credentials.from_service_account_file(
-    # SERVICE_ACCOUNT_FILE, scopes=["https://www.googleapis.com/auth/calendar"]
-    # )
-        # 토큰 저장
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-
-    print("credentials loaded")
     # Google Calendar API 객체 생성
     service = build('calendar', 'v3', credentials=creds)
 
-    # 일정 데이터 정의
+    # 삽입할 일정 정보
     event = {
         'summary': 'AI 미용실 예약',
         'location': 'Shinjuku, Tokyo',
@@ -57,9 +32,7 @@ def google_calendar():
             'timeZone': 'Asia/Tokyo',
         },
     }
-    print(event)
 
-    # 일정 삽입
+    # 일정 등록 (⚠️ 공유된 캘린더 ID 필요 시 calendarId 수정)
     event = service.events().insert(calendarId='primary', body=event).execute()
-    print('일정이 추가되었습니다:', event.get('htmlLink'))
-
+    print('✅ 일정이 추가되었습니다:', event.get('htmlLink'))
