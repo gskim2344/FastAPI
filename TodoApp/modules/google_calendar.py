@@ -7,6 +7,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from google.oauth2 import service_account
 import os
 
 # 일정 추가 시 필요한 권한 범위
@@ -30,8 +31,9 @@ def google_calendar():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
-            creds = flow.run_local_server(port=0)
-
+            creds = service_account.Credentials.from_service_account_file(
+    "service-account.json", scopes=["https://www.googleapis.com/auth/calendar"]
+)
         # 토큰 저장
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
