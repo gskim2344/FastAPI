@@ -40,4 +40,4 @@ def google_calendar():
 
     calendar_list = service.calendarList().list().execute()
     for calendar_entry in calendar_list['items']:
-        print(calendar_entry['id'], calendar_entry.get('summary'))
+        print('✅ TEST:',calendar_entry['id'], calendar_entry.get('summary'))
